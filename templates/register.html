@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <title>Registro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-</head>
 <body>
-    <body>
     <div class="container">
-        <h2>Iniciar Sesión</h2>
-        <form action="/login" method="post">
+        <h2>Registro de Usuario</h2>
+        <form action="/registrar" method="post">
             <input type="text" name="usuario" placeholder="Usuario" required><br>
             <input type="password" name="contrasena" placeholder="Contraseña" required><br>
-            <button type="submit">Entrar</button>
+            <button type="submit">Registrar</button>
         </form>
-        <a href="/registro">¿No tienes cuenta? Regístrate aquí</a>
+        <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
     </div>
-</body>
 </body>
 </html>
