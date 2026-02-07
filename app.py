@@ -1,19 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
-import sqlite3
+from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
-def crear_bd():
-    conn = sqlite3.connect('usuarios.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS usuarios (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    usuario TEXT UNIQUE,
-                    contrasena TEXT
-                )''')
-    conn.commit()
-    conn.close()
+# 🔧 CONFIGURA TUS DATOS DE CONEXIÓN AQUÍ
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '12345678'
+app.config['MYSQL_DB'] = 'TU_BASE_DE_DATOS'
+
+mysql = MySQL(app)
 
 @app.route('/')
 def inicio():
@@ -23,11 +20,12 @@ def inicio():
 def login():
     usuario = request.form['usuario']
     contrasena = request.form['contrasena']
-    conn = sqlite3.connect('usuarios.db')
-    c = conn.cursor()
-    c.execute("SELECT contrasena FROM usuarios WHERE usuario = ?", (usuario,))
-    resultado = c.fetchone()
-    conn.close()
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT contrasena FROM usuarios WHERE usuario = %s", (usuario,))
+    resultado = cur.fetchone()
+    cur.close()
+
     if resultado and check_password_hash(resultado[0], contrasena):
         return f"<h2>Bienvenido, {usuario}!</h2>"
     else:
@@ -42,16 +40,16 @@ def registrar():
     usuario = request.form['usuario']
     contrasena = request.form['contrasena']
     hash_contra = generate_password_hash(contrasena)
+
+    cur = mysql.connection.cursor()
     try:
-        conn = sqlite3.connect('usuarios.db')
-        c = conn.cursor()
-        c.execute("INSERT INTO usuarios (usuario, contrasena) VALUES (?, ?)", (usuario, hash_contra))
-        conn.commit()
-        conn.close()
+        cur.execute("INSERT INTO usuarios (usuario, contrasena) VALUES (%s, %s)", (usuario, hash_contra))
+        mysql.connection.commit()
+        cur.close()
         return redirect(url_for('inicio'))
     except:
-        return "<h2>Usuario ya registrado</h2>"
+        cur.close()
+        return "<h2>Ese usuario ya existe</h2>"
 
 if __name__ == '__main__':
-    crear_bd()
     app.run(debug=True)
