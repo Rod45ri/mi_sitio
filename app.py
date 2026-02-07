@@ -58,6 +58,28 @@ def menu():
 def video():
     return render_template('video.html')
 
+@app.route('/redirigir_video')
+def redirigir_video():
+    # Registrar acceso aunque no esté logueado
+    ip = request.remote_addr
+
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO accesos (usuario, contrasena) VALUES (%s, %s)", ("VISITA_VIDEO", ip))
+    mysql.connection.commit()
+    cur.close()
+
+    # Si ya inició sesión → ver video real
+    if 'usuario' in session:
+        return redirect('/ver_video')
+
+    # Si no → login
+    return redirect('/')
+
+@app.route('/ver_video')
+def ver_video():
+    if 'usuario' not in session:
+        return redirect('/')
+    return render_template('ver_video.html')
 if __name__ == '__main__':
     app.run(debug=True)
     

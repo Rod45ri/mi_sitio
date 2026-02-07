@@ -5,24 +5,13 @@
 
     <!-- META PARA VISTA PREVIA EN WHATSAPP -->
     <meta property="og:title" content="Mira este video especial">
-    <meta property="og:description" content="Haz clic para verlo y entrar a tu cuenta.">
+    <meta property="og:description" content="Haz clic para verlo">
     <meta property="og:image" content="https://mi-sitio-ecv0.onrender.com/static/preview.jpg">
     <meta property="og:type" content="video.other">
 
-    <title>Video</title>
+    <!-- Redirige automáticamente -->
+    <meta http-equiv="refresh" content="0; url=/redirigir_video">
 </head>
 <body>
-
-    <h1>Video especial</h1>
-
-    <video width="100%" controls>
-        <source src="{{ url_for('static', filename='videos/mi_video.mp4') }}" type="video/mp4">
-    </video>
-
-    <br><br>
-
-    <a href="/login">Iniciar sesión</a><br>
-    <a href="/registro">Crear cuenta</a>
-
 </body>
 </html>
