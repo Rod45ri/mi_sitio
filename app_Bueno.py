@@ -1,17 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for,session
+from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 import os
 
 app = Flask(__name__)
-app.secret_key = 'mi_clave_super_secreta_123'
-print("SECRET KEY:", app.secret_key)
 
 # 🔧 CONFIGURA TUS DATOS DE CONEXIÓN AQUÍ
-app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
-app.config['MYSQL_PORT'] = int(os.environ.get('MYSQL_PORT'))
-app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
-app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
-app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST', 'localhost')
+app.config['MYSQL_PORT'] = int(os.environ.get('MYSQL_PORT', 3306))
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', '12345678')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB', 'login')
 mysql = MySQL(app)
 
 @app.route('/')
@@ -24,12 +22,16 @@ def login():
     contrasena = request.form['contrasena']
 
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO accesos (usuario, contrasena) VALUES (%s, %s)", (usuario, contrasena))
-    mysql.connection.commit()
+    cur.execute("SELECT contrasena FROM usuarios WHERE usuario = %s", (usuario,))
+    resultado = cur.fetchone()
     cur.close()
 
-    session['usuario'] = usuario
-    return redirect('/menu')
+    # 🔥 Comparación directa (sin encriptación)
+    if resultado and resultado[0] == contrasena:
+        return render_template('menu.html', usuario=usuario)
+    else:
+        return "<h2>Credenciales incorrectas</h2>"
+
 @app.route('/registro')
 def registro():
     return render_template('register.html')
@@ -50,10 +52,5 @@ def registrar():
         cur.close()
         return "<h2>Ese usuario ya existe</h2>"
 
-@app.route('/menu')
-def menu():
-    return render_template('menu.html')
-
 if __name__ == '__main__':
     app.run(debug=True)
-    

@@ -1,55 +1,108 @@
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    width: 100%;
-    max-width: 400px;
+/* Esto evita que cualquier elemento se salga del contenedor */
+* {
     box-sizing: border-box;
 }
 
-h2 {
-    text-align: center;
-    color: #333;
+body {
+    background: #eef1f6;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-input[type="text"], input[type="password"] {
+.contenedor {
+    background: white;
     width: 100%;
-    padding: 12px;
+    max-width: 360px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px #ccc;
+    text-align: center;
+    overflow: hidden; /* ← evita que algo se desborde */
+}
+
+.titulo-app {
+    font-size: 40px;
+    font-weight: bold;
+    color: #2b6cb0;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
     margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    max-width: 100%; /* ← asegura que nunca se salga */
 }
 
 button {
     width: 100%;
-    padding: 12px;
-    background-color: #4facfe;
+    padding: 14px;
+    background: #2b6cb0;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-weight: bold;
+    border-radius: 6px;
+    font-size: 18px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #00c6ff;
+    background: #1e4f80;
 }
 
-a {
+.link {
     display: block;
-    text-align: center;
     margin-top: 15px;
-    color: #333;
+    color: #2b6cb0;
     text-decoration: none;
+    font-size: 15px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.btn-crear {
+    display: block;
+    background: #38a169;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.btn-crear:hover {
+    background: #2f855a;
+}
+
+.footer-logo {
+    margin-top: 25px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.footer-logo img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.footer-logo p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
 }
