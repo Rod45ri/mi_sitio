@@ -54,6 +54,10 @@ def registrar():
 def menu():
     return render_template('menu.html')
 
+@app.route('/video')
+def video():
+    return render_template('video.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
     
