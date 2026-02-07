@@ -5,10 +5,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
 # 🔧 CONFIGURA TUS DATOS DE CONEXIÓN AQUÍ
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '12345678'
-app.config['MYSQL_DB'] = 'login'
+import os
+
+app.config['MYSQL_HOST'] = os.environ.get('metro.proxy.rlwy.net')
+app.config['MYSQL_PORT'] = int(os.environ.get('3815'))
+app.config['MYSQL_USER'] = os.environ.get('root')
+app.config['MYSQL_PASSWORD'] = os.environ.get('OWEyYfNTAQQeVBwzJorCncfzHzuEZPEt')
+app.config['MYSQL_DB'] = os.environ.get('railway')
 
 mysql = MySQL(app)
 
