@@ -29,7 +29,7 @@ def login():
 
     # 🔥 Comparación directa (sin encriptación)
     if resultado and resultado[0] == contrasena:
-        return f"<h2>Bienvenido, {usuario}!</h2>"
+        return render_template('menu.html', usuario=usuario)
     else:
         return "<h2>Credenciales incorrectas</h2>"
 

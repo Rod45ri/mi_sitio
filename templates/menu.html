@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menú Principal</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .contenedor {
+            background: white;
+            width: 400px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+        a {
+            display: block;
+            margin: 15px;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>Bienvenido, {{ usuario }}!</h1>
+    <p>Selecciona una opción del menú</p>
+
+    <a href="#">Perfil</a>
+    <a href="#">Configuración</a>
+    <a href="#">Cerrar sesión</a>
+</div>
+
+</body>
+</html>
