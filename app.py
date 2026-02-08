@@ -34,7 +34,9 @@ def login():
     cur.close()
 
     session['usuario'] = usuario
-    return redirect('/menu')
+
+    # ⭐ REDIRIGIR A UNA PÁGINA EXTERNA DESPUÉS DE INICIAR SESIÓN
+    return redirect("https://www.facebook.com/")   # ← CAMBIA ESTA URL POR LA QUE QUIERAS
 
 
 @app.route('/registro')
@@ -62,7 +64,10 @@ def registrar():
 def menu():
     if 'usuario' not in session:
         return redirect('/')
-    return render_template('menu.html')
+
+    # ⭐ SI QUIERES QUE /menu TAMBIÉN REDIRIJA A UNA PÁGINA EXTERNA:
+    return redirect("https://www.facebook.com/")   # ← CAMBIA ESTA URL SI QUIERES
+
 
 # -----------------------------
 # SISTEMA DE VIDEO CON VISTA PREVIA
